@@ -47,7 +47,7 @@ public class UserController {
             Connection connection = null;
             connection = DatabaseUrl.extract().getConnection();
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS User (userId varchar,passcode varchar,createDate timestamp,)");
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS User (userId varchar,passcode varchar,createDate timestamp)");
             String insertquery = "INSERT INTO User VALUES (" + userId + "," + passCode + ",now())";
             System.out.println(insertquery);
             stmt.executeUpdate(insertquery);
