@@ -66,9 +66,10 @@ public class UserController {
 	      ArrayList<String> output = new ArrayList<String>();
 	      while (rs.next()) {
 	        output.add( "Read from DB: " + rs.getTimestamp("tick"));
+	        
 	      }
 
-	      System.out.println("zill");
+	      System.out.println("zill"+output.get(0));
 	      return "hello noted";
 	    } catch (Exception e) {
 	        System.out.println("zill null"+ e.getLocalizedMessage());
