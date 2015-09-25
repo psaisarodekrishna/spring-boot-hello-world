@@ -13,6 +13,7 @@
 
 package com.beta.mag.user.controller;
 
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,29 +38,15 @@ import com.heroku.sdk.jdbc.DatabaseUrl;
 @RequestMapping(value = "/api")
 public class UserController {
 
-    public Statement openConnection() {
-        Connection connection = null;
-        try {
-            connection = DatabaseUrl.extract().getConnection();
-            Statement stmt = connection.createStatement();
-            return stmt;
-        } catch (Exception e) {
-            System.out.println("Exception during connection opening");
-        } finally {
-            if (connection != null)
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                }
-        }
-        return null;
-    }
+  
 
     @RequestMapping(value = "/v10/user/{userId}/{passCode}", method = RequestMethod.GET)
     @ResponseBody
-    public String storeProfile(@PathVariable final String userId, @PathVariable final String passCode) {
+    public String storeProfile(@PathVariable final String userId, @PathVariable final String passCode) throws URISyntaxException {
         try {
-            Statement stmt = openConnection();
+            Connection connection = null;
+            connection = DatabaseUrl.extract().getConnection();
+            Statement stmt = connection.createStatement();
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS User (userId varchar,passcode varchar,createDate timestamp,)");
             String insertquery = "INSERT INTO User VALUES (" + userId + "," + passCode + ",now())";
             System.out.println(insertquery);
@@ -77,7 +64,8 @@ public class UserController {
 
         Connection connection = null;
         try {
-            Statement stmt = openConnection();
+            connection = DatabaseUrl.extract().getConnection();
+            Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT userId FROM User");
             ArrayList<String> output = new ArrayList<String>();
             while (rs.next()) {
