@@ -44,7 +44,7 @@ public class UserController {
 	public String getUserProfile(@PathVariable final String userId,
 			@PathVariable final String passCode)  {
 		System.out.println("helloe");
-		return null;
+		return "hello user..Have a good day..";
 	}
 	
 	
@@ -68,9 +68,10 @@ public class UserController {
 	        output.add( "Read from DB: " + rs.getTimestamp("tick"));
 	      }
 
-	      
+	      System.out.println("zill");
 	      return "hello noted";
 	    } catch (Exception e) {
+	        System.out.println("zill null"+ e.getLocalizedMessage());
 	      return null;
 	    } finally {
 	      if (connection != null) try{connection.close();} catch(SQLException e){}
